@@ -1,4 +1,4 @@
-package sword
+package dagger
 
 import (
 	"image/color"
@@ -13,14 +13,11 @@ import (
 //go:embed sprites/blades_32_1x3.png
 var blades_png []byte
 
-//go:embed sprites/guards_32_1x2.png
+//go:embed sprites/guards_32_1x3.png
 var guards_png []byte
 
-//go:embed sprites/grips_32_1x1.png
+//go:embed sprites/grips_32_1x3.png
 var grips_png []byte
-
-//go:embed sprites/pommels_32_1x2.png
-var pommels_png []byte
 
 // #9badb7
 var defaultColorBlade = color.RGBA{R: 0x9b, G: 0xad, B: 0xb7, A: 0xff}
@@ -30,9 +27,6 @@ var defaultColorGuard = color.RGBA{R: 0x63, G: 0x9b, B: 0xff, A: 0xff}
 
 // #663931
 var defaultColorGrips = color.RGBA{R: 0x66, G: 0x39, B: 0x31, A: 0xff}
-
-// #fbf236
-var defaultColorPommel = color.RGBA{R: 0xfb, G: 0xf2, B: 0x36, A: 0xff}
 
 // TODO: Move to common package
 var colorsMetal = []color.RGBA{
@@ -49,51 +43,6 @@ var colorsMetal = []color.RGBA{
 	{R: 0xff, G: 0x80, B: 0x00, A: 0xff}, // Orichalcum
 	{R: 0x80, G: 0x00, B: 0x00, A: 0xff}, // Meteorite
 	{R: 0x00, G: 0x00, B: 0x00, A: 0xff}, // Obsidian
-}
-
-// TODO: Move to common package
-var colorsGem = []color.RGBA{
-	{R: 0xff, G: 0x00, B: 0x00, A: 0xff}, // Ruby
-	{R: 0x00, G: 0xff, B: 0x00, A: 0xff}, // Emerald
-	{R: 0x00, G: 0x00, B: 0xff, A: 0xff}, // Sapphire
-	{R: 0xff, G: 0xff, B: 0x00, A: 0xff}, // Topaz
-	{R: 0xff, G: 0x00, B: 0xff, A: 0xff}, // Amethyst
-	{R: 0x00, G: 0xff, B: 0xff, A: 0xff}, // Aquamarine
-	{R: 0xff, G: 0x80, B: 0x00, A: 0xff}, // Citrine
-	{R: 0x80, G: 0xff, B: 0x00, A: 0xff}, // Peridot
-	{R: 0x00, G: 0x80, B: 0xff, A: 0xff}, // Lapis Lazuli
-	{R: 0xff, G: 0x00, B: 0x80, A: 0xff}, // Garnet
-	{R: 0x80, G: 0x00, B: 0xff, A: 0xff}, // Tourmaline
-	{R: 0x00, G: 0xff, B: 0x80, A: 0xff}, // Zircon
-	{R: 0x80, G: 0xff, B: 0x80, A: 0xff}, // Agate
-	{R: 0xff, G: 0x80, B: 0x80, A: 0xff}, // Jasper
-	{R: 0x80, G: 0x80, B: 0xff, A: 0xff}, // Opal
-	{R: 0x80, G: 0xff, B: 0x80, A: 0xff}, // Onyx
-	{R: 0xff, G: 0x80, B: 0xff, A: 0xff}, // Pearl
-	{R: 0xff, G: 0xff, B: 0x80, A: 0xff}, // Coral
-	{R: 0x80, G: 0xff, B: 0xff, A: 0xff}, // Amber
-	{R: 0xff, G: 0x80, B: 0xff, A: 0xff}, // Jade
-	{R: 0xff, G: 0xff, B: 0x80, A: 0xff}, // Turquoise
-	{R: 0x80, G: 0xff, B: 0xff, A: 0xff}, // Moonstone
-	{R: 0xff, G: 0x80, B: 0xff, A: 0xff}, // Sunstone
-	{R: 0xff, G: 0xff, B: 0x80, A: 0xff}, // Bloodstone
-	{R: 0x80, G: 0xff, B: 0xff, A: 0xff}, // Malachite
-	{R: 0xff, G: 0x80, B: 0xff, A: 0xff}, // Carnelian
-	{R: 0xff, G: 0xff, B: 0x80, A: 0xff}, // Chrysoprase
-	{R: 0x80, G: 0xff, B: 0xff, A: 0xff}, // Chrysocolla
-	{R: 0xff, G: 0x80, B: 0xff, A: 0xff}, // Rhodochrosite
-	{R: 0xff, G: 0xff, B: 0x80, A: 0xff}, // Rhodonite
-	{R: 0x80, G: 0xff, B: 0xff, A: 0xff}, // Sardonyx
-	{R: 0xff, G: 0x80, B: 0xff, A: 0xff}, // Serpentine
-	{R: 0xff, G: 0xff, B: 0x80, A: 0xff}, // Sodalite
-	{R: 0x80, G: 0xff, B: 0xff, A: 0xff}, // Spinel
-	{R: 0xff, G: 0x80, B: 0xff, A: 0xff}, // Sugilite
-	{R: 0xff, G: 0xff, B: 0x80, A: 0xff}, // Thulite
-	{R: 0x80, G: 0xff, B: 0xff, A: 0xff}, // Tiger's Eye
-	{R: 0xff, G: 0x80, B: 0xff, A: 0xff}, // Unakite
-	{R: 0xff, G: 0xff, B: 0x80, A: 0xff}, // Variscite
-	{R: 0x80, G: 0xff, B: 0xff, A: 0xff}, // Vesuvianite
-	{R: 0xff, G: 0x80, B: 0xff, A: 0xff}, // Zoisite
 }
 
 // TODO: Move to common package
@@ -128,22 +77,16 @@ func New() (*genitemimage.ItemBundle, error) {
 	if err != nil {
 		return nil, err
 	}
-	pommelSheet, err := spritesheet.New(pommels_png, 32)
-	if err != nil {
-		return nil, err
-	}
 
-	sb := genitemimage.New("Sword")
+	sb := genitemimage.New("Dagger")
 
 	sb.AddSpritesheet(bladeSheet, "Blade", false)
 	sb.AddSpritesheet(guardSheet, "Guard", false)
 	sb.AddSpritesheet(gripSheet, "Grip", false)
-	sb.AddSpritesheet(pommelSheet, "Pommel", false)
 
 	sb.AddReplaceColor(defaultColorBlade, colorsMetal)
 	sb.AddReplaceColor(defaultColorGuard, colorsMetal)
 	sb.AddReplaceColor(defaultColorGrips, colorsGrip)
-	sb.AddReplaceColor(defaultColorPommel, colorsGem)
 
 	return sb, nil
 }

@@ -10,6 +10,11 @@ improve the usability etc.
 ![alt text](https://raw.githubusercontent.com/Flokey82/genitemimage/main/samples/sword/sword_2.png "Sword 3")
 ![alt text](https://raw.githubusercontent.com/Flokey82/genitemimage/main/samples/sword/sword_3.png "Sword 4")
 
+![alt text](https://raw.githubusercontent.com/Flokey82/genitemimage/main/samples/dagger/dagger_0.png "Sword 1")
+![alt text](https://raw.githubusercontent.com/Flokey82/genitemimage/main/samples/dagger/dagger_1.png "Sword 2")
+![alt text](https://raw.githubusercontent.com/Flokey82/genitemimage/main/samples/dagger/dagger_2.png "Sword 3")
+![alt text](https://raw.githubusercontent.com/Flokey82/genitemimage/main/samples/dagger/dagger_3.png "Sword 4")
+
 ## TODO:
 
 - [ ] Component specific replacement colors
