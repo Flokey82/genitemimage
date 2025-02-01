@@ -22,8 +22,11 @@ improve the usability etc.
 - [ ] Procedural magical effects (glow, fire, etc.)
   - [ ] On entire item
   - [X] On components
-  - [ ] Custom colors
+  - [X] Custom colors
   - [ ] Different effects
     - [X] Flame
+    - [X] Drip
     - [ ] Ice / Snow
     - [ ] Lightning
+    - [ ] Glow
+- [ ] Allow specifying of probabilities for optional components and effects

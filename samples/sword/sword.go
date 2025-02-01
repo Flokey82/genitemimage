@@ -55,7 +55,10 @@ func New() (*genitemimage.ItemBundle, error) {
 	sb := genitemimage.New("Sword")
 
 	bs := sb.AddSpritesheet(bladeSheet, "Blade")
-	bs.CanHaveFlame = true
+	bs.OptionalEffects = []genitemimage.EffectType{
+		genitemimage.EffectFlame,
+		genitemimage.EffectDrip,
+	}
 	sb.AddSpritesheet(guardSheet, "Guard")
 	sb.AddSpritesheet(gripSheet, "Grip")
 	sb.AddSpritesheet(pommelSheet, "Pommel")

@@ -26,7 +26,9 @@ func New(name string) *ItemBundle {
 }
 
 func (i *ItemBundle) AddSpritesheet(s *spritesheet.Spritesheet, name string) *Component {
-	c := &Component{s: s, Name: name}
+	c := &Component{
+		s: s, Name: name,
+	}
 	i.Spritesheets = append(i.Spritesheets, c)
 	return c
 }
@@ -46,16 +48,24 @@ func (i *ItemBundle) Generate() image.Image {
 		for _, r := range i.ReplaceColors {
 			sImg = spritesheet.ReplaceColor(sImg, r.From, r.To[rand.Intn(len(r.To))])
 		}
-		// Randomly apply flame effect
-		if s.CanHaveFlame && rand.Intn(2) == 0 {
-			// Color 1: Yellow
-			cYellow := color.NRGBA{R: 0xff, G: 0xff, B: 0x00, A: 0xff}
-			// Color 2: Orange
-			cOrange := color.NRGBA{R: 0xff, G: 0x80, B: 0x00, A: 0xaa}
-			flameImg := spritesheet.ApplyFlameEffect(sImg, cYellow, cOrange)
+		// Randomly apply effect
+		if len(s.OptionalEffects) > 0 && rand.Intn(2) == 0 {
+			switch s.OptionalEffects[rand.Intn(len(s.OptionalEffects))] {
+			case EffectFlame:
+				cA := ColorsEffectA[rand.Intn(len(ColorsEffectA))]
+				cB := ColorsEffectB[rand.Intn(len(ColorsEffectB))]
+				flameImg := spritesheet.ApplyFlameEffect(sImg, cA, cB)
 
-			// Draw the flame effect on top of the original image, blending the two.
-			draw.Draw(img, img.Bounds(), flameImg, image.Point{0, 0}, draw.Over)
+				// Draw the flame effect on top of the original image, blending the two.
+				draw.Draw(img, img.Bounds(), flameImg, image.Point{0, 0}, draw.Over)
+			case EffectDrip:
+				cA := ColorsEffectA[rand.Intn(len(ColorsEffectA))]
+				cB := ColorsEffectB[rand.Intn(len(ColorsEffectB))]
+				dripImg := spritesheet.ApplyDripEffect(sImg, cA, cB)
+
+				// Draw the drip effect on top of the original image, blending the two.
+				draw.Draw(img, img.Bounds(), dripImg, image.Point{0, 0}, draw.Over)
+			}
 		}
 		draw.Draw(img, img.Bounds(), sImg, image.Point{0, 0}, draw.Over)
 	}
@@ -64,10 +74,35 @@ func (i *ItemBundle) Generate() image.Image {
 }
 
 type Component struct {
-	s            *spritesheet.Spritesheet
-	Name         string
-	Optional     bool
-	CanHaveFlame bool
+	s               *spritesheet.Spritesheet
+	Name            string       // Name of the component
+	Optional        bool         // Optional component
+	OptionalEffects []EffectType // Optional effects
+}
+
+// EffectType is an enumeration of the different effects that can be applied to an item.
+type EffectType int
+
+const (
+	EffectFlame EffectType = iota
+	EffectDrip
+)
+
+// ColorsEffectA is a list of colors that can be used for the first color of an effect.
+var ColorsEffectA = []color.NRGBA{
+	{R: 0xff, G: 0xff, B: 0x00, A: 0xff}, // Yellow
+	{R: 0xff, G: 0xff, B: 0xff, A: 0xff}, // White
+	{R: 0xff, G: 0xaa, B: 0xaa, A: 0xff}, // Light Red
+	{R: 0xff, G: 0x00, B: 0x00, A: 0xff}, // Red
+}
+
+// ColorsEffectB is a list of colors that can be used for the second color of an effect.
+var ColorsEffectB = []color.NRGBA{
+	{R: 0xff, G: 0x80, B: 0x00, A: 0xaa}, // Orange
+	{R: 0xff, G: 0x00, B: 0x00, A: 0xaa}, // Red
+	{R: 0x00, G: 0x00, B: 0xff, A: 0xaa}, // Blue
+	{R: 0x00, G: 0xff, B: 0x00, A: 0xaa}, // Green
+	{R: 0x00, G: 0x00, B: 0x00, A: 0x00}, // Transparent
 }
 
 // ColorsMetal is a list of colors that can be used for the metal of an item.
