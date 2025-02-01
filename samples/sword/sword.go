@@ -58,6 +58,7 @@ func New() (*genitemimage.ItemBundle, error) {
 	bs.OptionalEffects = []genitemimage.EffectType{
 		genitemimage.EffectFlame,
 		genitemimage.EffectDrip,
+		genitemimage.EffectGlow,
 	}
 	sb.AddSpritesheet(guardSheet, "Guard")
 	sb.AddSpritesheet(gripSheet, "Grip")

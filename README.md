@@ -28,5 +28,5 @@ improve the usability etc.
     - [X] Drip
     - [ ] Ice / Snow
     - [ ] Lightning
-    - [ ] Glow
+    - [X] Glow
 - [ ] Allow specifying of probabilities for optional components and effects

@@ -65,6 +65,13 @@ func (i *ItemBundle) Generate() image.Image {
 
 				// Draw the drip effect on top of the original image, blending the two.
 				draw.Draw(img, img.Bounds(), dripImg, image.Point{0, 0}, draw.Over)
+			case EffectGlow:
+				cA := ColorsEffectA[rand.Intn(len(ColorsEffectA))]
+				cB := ColorsEffectB[rand.Intn(len(ColorsEffectB))]
+				glowImg := spritesheet.ApplyGlowEffect(sImg, cA, cB)
+
+				// Draw the glow effect on top of the original image, blending the two.
+				draw.Draw(img, img.Bounds(), glowImg, image.Point{0, 0}, draw.Over)
 			}
 		}
 		draw.Draw(img, img.Bounds(), sImg, image.Point{0, 0}, draw.Over)
@@ -86,6 +93,7 @@ type EffectType int
 const (
 	EffectFlame EffectType = iota
 	EffectDrip
+	EffectGlow
 )
 
 // ColorsEffectA is a list of colors that can be used for the first color of an effect.
