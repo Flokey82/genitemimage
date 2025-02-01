@@ -19,3 +19,11 @@ improve the usability etc.
 
 - [ ] Component specific replacement colors
 - [ ] Generation with set parameters, colors, etc.
+- [ ] Procedural magical effects (glow, fire, etc.)
+  - [ ] On entire item
+  - [X] On components
+  - [ ] Custom colors
+  - [ ] Different effects
+    - [X] Flame
+    - [ ] Ice / Snow
+    - [ ] Lightning

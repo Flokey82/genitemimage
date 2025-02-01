@@ -80,9 +80,10 @@ func New() (*genitemimage.ItemBundle, error) {
 
 	sb := genitemimage.New("Dagger")
 
-	sb.AddSpritesheet(bladeSheet, "Blade", false)
-	sb.AddSpritesheet(guardSheet, "Guard", false)
-	sb.AddSpritesheet(gripSheet, "Grip", false)
+	bs := sb.AddSpritesheet(bladeSheet, "Blade")
+	bs.CanHaveFlame = true
+	sb.AddSpritesheet(guardSheet, "Guard")
+	sb.AddSpritesheet(gripSheet, "Grip")
 
 	sb.AddReplaceColor(defaultColorBlade, colorsMetal)
 	sb.AddReplaceColor(defaultColorGuard, colorsMetal)

@@ -25,8 +25,10 @@ func New(name string) *ItemBundle {
 	return &ItemBundle{Name: name}
 }
 
-func (i *ItemBundle) AddSpritesheet(s *spritesheet.Spritesheet, name string, optional bool) {
-	i.Spritesheets = append(i.Spritesheets, &Component{s: s, Name: name, Optional: optional})
+func (i *ItemBundle) AddSpritesheet(s *spritesheet.Spritesheet, name string) *Component {
+	c := &Component{s: s, Name: name}
+	i.Spritesheets = append(i.Spritesheets, c)
+	return c
 }
 
 func (i *ItemBundle) AddReplaceColor(from color.RGBA, to []color.RGBA) {
@@ -40,18 +42,30 @@ func (i *ItemBundle) Generate() image.Image {
 			continue
 		}
 		sImg := s.s.TileImage(rand.Intn(s.s.NumTiles()))
-		draw.Draw(img, img.Bounds(), sImg, image.Point{0, 0}, draw.Over)
-	}
 
-	for _, r := range i.ReplaceColors {
-		img = spritesheet.ReplaceColor(img, r.From, r.To[rand.Intn(len(r.To))])
+		for _, r := range i.ReplaceColors {
+			sImg = spritesheet.ReplaceColor(sImg, r.From, r.To[rand.Intn(len(r.To))])
+		}
+		// Randomly apply flame effect
+		if s.CanHaveFlame && rand.Intn(2) == 0 {
+			// Color 1: Yellow
+			cYellow := color.NRGBA{R: 0xff, G: 0xff, B: 0x00, A: 0xff}
+			// Color 2: Orange
+			cOrange := color.NRGBA{R: 0xff, G: 0x80, B: 0x00, A: 0xaa}
+			flameImg := spritesheet.ApplyFlameEffect(sImg, cYellow, cOrange)
+
+			// Draw the flame effect on top of the original image, blending the two.
+			draw.Draw(img, img.Bounds(), flameImg, image.Point{0, 0}, draw.Over)
+		}
+		draw.Draw(img, img.Bounds(), sImg, image.Point{0, 0}, draw.Over)
 	}
 
 	return img
 }
 
 type Component struct {
-	s        *spritesheet.Spritesheet
-	Name     string
-	Optional bool
+	s            *spritesheet.Spritesheet
+	Name         string
+	Optional     bool
+	CanHaveFlame bool
 }

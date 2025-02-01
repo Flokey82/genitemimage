@@ -135,10 +135,11 @@ func New() (*genitemimage.ItemBundle, error) {
 
 	sb := genitemimage.New("Sword")
 
-	sb.AddSpritesheet(bladeSheet, "Blade", false)
-	sb.AddSpritesheet(guardSheet, "Guard", false)
-	sb.AddSpritesheet(gripSheet, "Grip", false)
-	sb.AddSpritesheet(pommelSheet, "Pommel", false)
+	bs := sb.AddSpritesheet(bladeSheet, "Blade")
+	bs.CanHaveFlame = true
+	sb.AddSpritesheet(guardSheet, "Guard")
+	sb.AddSpritesheet(gripSheet, "Grip")
+	sb.AddSpritesheet(pommelSheet, "Pommel")
 
 	sb.AddReplaceColor(defaultColorBlade, colorsMetal)
 	sb.AddReplaceColor(defaultColorGuard, colorsMetal)
