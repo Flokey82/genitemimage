@@ -36,6 +36,7 @@ func New() (*genitemimage.ItemBundle, error) {
 	hs := sb.AddSpritesheet(headSheet, "Head")
 	hs.OptionalEffects = []genitemimage.EffectType{
 		genitemimage.EffectGlow,
+		genitemimage.EffectCorrosion,
 	}
 	sb.AddSpritesheet(handleSheet, "Handle")
 

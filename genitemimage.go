@@ -72,6 +72,19 @@ func (i *ItemBundle) Generate() image.Image {
 
 				// Draw the glow effect on top of the original image, blending the two.
 				draw.Draw(img, img.Bounds(), glowImg, image.Point{0, 0}, draw.Over)
+			case EffectCorrosion:
+				rustColor := color.NRGBA{R: 0x80, G: 0x00, B: 0x00, A: 0xff}
+				corrosionImg := spritesheet.ApplyCorrosion(sImg, rustColor, 3, 3)
+
+				// We will need to make a copy of the original sprite layer to apply the corrosion effect.
+				tmpLayer := image.NewNRGBA(sImg.Bounds())
+				draw.Draw(tmpLayer, tmpLayer.Bounds(), sImg, image.Point{0, 0}, draw.Over)
+
+				// Draw the corrosion effect on top of the copy of the original image, blending the two.
+				draw.Draw(tmpLayer, tmpLayer.Bounds(), corrosionImg, image.Point{0, 0}, draw.Over)
+
+				// Assign the modified image to the original image.
+				sImg = tmpLayer
 			}
 		}
 		draw.Draw(img, img.Bounds(), sImg, image.Point{0, 0}, draw.Over)
@@ -94,6 +107,7 @@ const (
 	EffectFlame EffectType = iota
 	EffectDrip
 	EffectGlow
+	EffectCorrosion
 )
 
 // ColorsEffectA is a list of colors that can be used for the first color of an effect.
