@@ -193,3 +193,8 @@ var ColorsGrip = []color.RGBA{
 	{R: 0x00, G: 0x00, B: 0x80, A: 0xff}, // Cardboard
 	{R: 0x80, G: 0x80, B: 0x00, A: 0xff}, // Bamboo
 }
+
+// ColorsWood is a list of colors that can be used for the wood of an item.
+var ColorsWood = []color.RGBA{
+	{R: 0x66, G: 0x39, B: 0x31, A: 0xff}, // Brown
+}
